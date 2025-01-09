@@ -67,6 +67,23 @@ app.post("/users/:username/friends",async(req,res)=>{
     res.status(500).json({ error: 'Error finding mutual followers' });
   }
 })
+app.get('/users/search', async (req, res) => {
+  const { query } = req.query;
+//conosle.log(query);
+  try {
+    const users = await UserModel.find({
+      $or: [
+        { username: new RegExp(query, 'i') },
+        { location: new RegExp(query, 'i') },
+        { bio: new RegExp(query, 'i') },
+      ],
+    });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: 'Error searching users' });
+  }
+});
+
 app.listen(8000, async () => {
   try {
     await connection;
