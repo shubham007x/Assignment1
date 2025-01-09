@@ -24,7 +24,7 @@ app.post("/users", async (req, res) => {
       console.log(data);
 
       //Saving user data to MongoDb Database
-      user = await UserModel.create({
+      user = new UserModel({
         username: data.login,
         avatar_url: data.avatar_url,
         public_repos: data.public_repos,
@@ -36,13 +36,37 @@ app.post("/users", async (req, res) => {
         bio: data.bio,
         created_at: data.created_at,
       });
+      await user.save();
     }
     res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ error: "error", error });
   }
 });
+app.post("/users/:username/friends",async(req,res)=>{
+  const {username}=req.params;
+  //console.log(username)
+  try {
+    const user = await UserModel.findOne({ username });
+    console.log(user)
+    if (!user) return res.status(404).json({ error: 'User not found' });
 
+    const followersResponse = await axios.get(`https://api.github.com/users/${username}/followers`);
+    const followingResponse = await axios.get(`https://api.github.com/users/${username}/following`);
+
+    const followers = followersResponse.data.map(f => f.login);
+    console.log(followers);
+    const following = followingResponse.data.map(f => f.login);
+
+    const mutuals = followers.filter(f => following.includes(f));
+    user.friends = mutuals;
+
+    await user.save();
+    res.json(mutuals);
+  } catch (err) {
+    res.status(500).json({ error: 'Error finding mutual followers' });
+  }
+})
 app.listen(8000, async () => {
   try {
     await connection;
