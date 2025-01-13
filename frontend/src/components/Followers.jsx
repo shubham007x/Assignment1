@@ -13,7 +13,7 @@ const Followers = () => {
     const fetchFollowers = async () => {
       try {
         // Fetch mutual followers from your backend
-        const response = await axios.post(`http://localhost:8000/users/${username}/friends`);
+        const response = await axios.post(`https://deployments-k6oq.onrender.com/users/${username}/friends`);
         setFollowers(response.data);
         setLoading(false);
       } catch (error) {
