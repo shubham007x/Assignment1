@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { UserModel } = require("../models/User.model");
 const userRouter = express.Router();
-
+const axios=require("axios")
 //POST /user endpoint to save github user data
 
 userRouter.post("/", async (req, res) => {
@@ -41,10 +41,11 @@ userRouter.post("/", async (req, res) => {
 // Endpoint to get friends
 userRouter.post("/:username/friends", async (req, res) => {
   const { username } = req.params;
-  //console.log(username)
+  console.log(req.url)
+  console.log(username)
   try {
     const user = await UserModel.findOne({ username });
-    console.log(user);
+    //console.log(user);
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const followersResponse = await axios.get(
@@ -146,4 +147,7 @@ userRouter.get("/", async (req, res) => {
     res.status(500).json({ error: "Error retrieving users" });
   }
 });
+// Endpoint to get repositories for a user 
+
+
 module.exports = { userRouter };

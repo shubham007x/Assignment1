@@ -1,0 +1,70 @@
+/* Container for the entire Followers page */
+.followers-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  /* Back button styling */
+  .back-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Title styling */
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Followers list styling */
+  .followers-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Individual follower item styling */
+  .follower-item {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .follower-item:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Optional responsive adjustments */
+  @media (max-width: 600px) {
+    .followers-container {
+      padding: 10px;
+    }
+  
+    .back-button {
+      padding: 8px 15px;
+    }
+  
+    h1 {
+      font-size: 1.5rem;
+    }
+  
+    .follower-item {
+      padding: 8px;
+    }
+  }
+  
